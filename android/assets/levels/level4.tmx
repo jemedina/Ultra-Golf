@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="20" tilewidth="128" tileheight="60" nextobjectid="7">
+ <tileset firstgid="1" name="mapa1" tilewidth="128" tileheight="60" tilecount="320" columns="16">
+  <image source="Fondo4.png" width="2048" height="1200"/>
+ </tileset>
+ <layer name="Capa de Patrones 1" width="16" height="20">
+  <data encoding="base64" compression="zlib">
+   eJwNwweYDgQAAND/nDvODTfddO7O3bmF2/uOUjaZUWhJmhpKVBQNNBRllpGyqYyGFUVDqLRoaQ8NldI23ve9FxQIBJoYbFNDDLWZzQ2zheFGGGmULY02xljjjDfBViaaZLIppppma9NtY4aZZtnWbHPMtZ155ltgoUW2t4MdLbbEUssst8JKq6y2xlrrrLfBRjvZ2TM80y6e5dl2tZvd7WFPe9nbPvb1HPvZ3wEOdJCDPdchDvU8z3eYwx3hBV7oRV7sJY70Ukd5maO93Cu80qu82msc47Ve5/Xe4Fhv9CbHebPjneAt3uptTnSSt3uHk53ind7l3d7jVKc53Xu9z/t9wBk+6EPOdJYP+4izneNc5znfBT7qYy50kYtd4uMu9QmfdJnLXeFKV7naNa51nU/5tM+43g1udJPP+pzP+4Kb3eJWt7ndF93hTl/yZXe521d81dd83T2+4V73ud83fcu3PeA7vut7vu8HHvSQH/qRH/uJn3rYz/zcL/zSr/zab/zW7/zeI/7gj/7kzx71F3/1N4/5u3943D/9y7/9x3/9z/894UlPGQjCJgbb1BBDbWZzw2xhuBFGGmVLo40x1jjjTbCViSaZbIqpptnadNuYYaZZtjXbHHNtZ575Flhoke3tYEeLLbHUMsutsNIqq62x1jrrbbDRTnb2NCsEh+I=
+  </data>
+ </layer>
+ <objectgroup name="objetos">
+  <object id="1" x="57.5758" y="912.121" width="81.8182" height="81.8182">
+   <properties>
+    <property name="pelota" type="float" value="0"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="3" x="1748" y="284">
+   <properties>
+    <property name="hoyo" type="float" value="0"/>
+   </properties>
+   <polyline points="0,0 52,0"/>
+  </object>
+  <object id="4" x="0" y="1000">
+   <properties>
+    <property name="rozamiento" type="float" value="0.59999999999999998"/>
+   </properties>
+   <polyline points="0,0 196.97,0 221.212,-6.06061 354.545,-142.424 412.121,-284.848 506.061,-590.909 560.606,-769.697 600,-790.909 639.394,-772.727 821.212,-472.727 903.03,-321.212 945.455,-233.333 1003.03,-145.455 1018.67,-132 1029.33,-121.333 1044,-109.333 1054.67,-100 1062.67,-93.3333 1074.67,-85.3333 1086.67,-77.3333 1108,-65.3333 1144,-50.6667 1232,-28 1425.33,-20 2041.33,-16 2045.33,196 0,197.333 0,1.33333"/>
+  </object>
+  <object id="5" x="1802.67" y="274.667">
+   <properties>
+    <property name="rozamiento" type="float" value="0.59999999999999998"/>
+   </properties>
+   <polyline points="0,0 84,-2.66667 142.667,36 172,273.333 130.667,402.667 -54.6667,428 -337.333,374.667 -670.667,105.333 -684,20 -576,-8 -69.3333,-5.33333"/>
+  </object>
+  <object id="6" x="4" y="1000">
+   <properties>
+    <property name="rozamiento" type="float" value="0"/>
+   </properties>
+   <polyline points="0,0 -2,-1000 2040,-1000 2040,-16"/>
+  </object>
+ </objectgroup>
+</map>

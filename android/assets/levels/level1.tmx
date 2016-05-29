@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="24" height="16" tilewidth="25" tileheight="25" nextobjectid="20">
+ <tileset firstgid="1" name="Fondo1" tilewidth="25" tileheight="25" tilecount="144" columns="24">
+  <image source="Fondo1.png" width="604" height="173"/>
+ </tileset>
+ <layer name="Capa de Patrones 1" width="24" height="16">
+  <data encoding="base64" compression="zlib">
+   eJztw4c2FQAAANAXQpQZUdkzRCnZyt6zUmigQhlFCMmszOiT3d9wzrvn3EAgKCjosrpiiKGGedVwI4z0mlFGe90bxhhrnPEmmOhNk0z2limmets73jXNdDPMNMtsc8w1z3wLLPSeRRZb4n1LLfOBDy33kY+t8ImVVlltjbXWWW+DT31mo00222KrbbbbYadddttjr332O+CgQz73hS8d9pWvHXHUMd/41ne+d9wJJ/3gRz855bQzfvaLs84574Jf/eaiS3532RVX/eGa6274001/ueW2O+66576//eNfDzz0yGNPPPWfZ5773wsKkSjJ
+  </data>
+ </layer>
+ <objectgroup name="objetos">
+  <object id="12" x="575.5" y="340">
+   <polyline points="0,0 24,0"/>
+  </object>
+  <object id="13" x="555.5" y="345">
+   <properties>
+    <property name="oyo" type="bool" value="true"/>
+   </properties>
+   <polyline points="0,0 18.5,0"/>
+  </object>
+  <object id="15" x="0" y="260">
+   <polyline points="0,0 0.5,-260 598.5,-260 599.5,80.5"/>
+  </object>
+  <object id="17" x="1" y="258.5">
+   <polyline points="0,0 23.5,0 49,-0.5 89,0 156,-1 174,-0.5 181,1 186.5,6.5 189.5,13 199,34.5 212,56 228.5,73.5 244.5,79.5 262,79.5 355.5,79.5 412,80 416.5,79 428,75.5 443.5,66 459.5,55.5 471.5,52.5 483,54.5 490,58.5 493,62 498,70.5 509,77.5 513.5,79.5 533,79.5 553,79.5"/>
+  </object>
+  <object id="18" x="13.6667" y="56.333" width="14.6667" height="14">
+   <properties>
+    <property name="pelota" type="bool" value="true"/>
+   </properties>
+   <ellipse/>
+  </object>
+ </objectgroup>
+</map>
