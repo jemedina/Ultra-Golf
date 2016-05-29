@@ -32,7 +32,6 @@ public class Nube extends Actor {
         x -= velosidad*delta;
         float dy = (yCam0-camera.position.y);
         yCam0 = camera.position.y;
-        System.out.println(dy);
         y += dy*10/(mapSize.getHeight()/PPM);
         if(x < -(textura.getWidth()*1.4f/PPM)) {
             x = (float) (mapSize.getWidth()/ PPM);

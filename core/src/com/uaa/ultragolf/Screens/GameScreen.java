@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.uaa.ultragolf.Actors.Nube;
 import com.uaa.ultragolf.Actors.Pelota;
+import com.uaa.ultragolf.Animations.FlechaAnimation;
 import com.uaa.ultragolf.Global.Constantes;
 import com.uaa.ultragolf.Levels.LevelLoader;
 
@@ -45,7 +46,7 @@ public class GameScreen extends ScreenAdapter {
         camera = new OrthographicCamera(Constantes.WIDTH / PPM, Constantes.HEIGHT / PPM);
         camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
         camera.update();
-        LevelLoader levelLoader = new LevelLoader(world, pelota.body, holeBody, 2, map);
+        LevelLoader levelLoader = new LevelLoader(world, pelota.body, holeBody, 3, map);
         levelLoader.loadLevel();
         pelota.body = levelLoader.getPelotaBody();
         holeBody = levelLoader.getHoleBody();
@@ -75,6 +76,7 @@ public class GameScreen extends ScreenAdapter {
         mapRenderer.render();
         batch.begin();
         pelota.draw(batch,1);
+
         batch.end();
         //physicsRenderer.render(world,camera.combined);
     }
@@ -151,7 +153,22 @@ public class GameScreen extends ScreenAdapter {
             camera.position.y = pelota.body.getPosition().y;
 
             limitCamera();
-            pelota.body.applyForceToCenter(100f,100f,true);
+            pelota.body.applyForceToCenter(pelota.getXForce(100),pelota.getYForce(100),true);
+            if(pelota.isFirstTime())
+            {
+                pelota.setFirstTime(false);
+            }
+        }
+
+        if(!pelota.isMoving() || pelota.isFirstTime()){
+            if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+                pelota.setAngle(pelota.getAngle()+2);
+                System.out.println("1");
+            }
+            if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+                pelota.setAngle(pelota.getAngle()-2);
+                System.out.println("2");
+            }
         }
     }
 
