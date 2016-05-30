@@ -46,7 +46,7 @@ public class GameScreen extends ScreenAdapter {
         camera = new OrthographicCamera(Constantes.WIDTH / PPM, Constantes.HEIGHT / PPM);
         camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
         camera.update();
-        LevelLoader levelLoader = new LevelLoader(world, pelota.body, holeBody, 3, map);
+        LevelLoader levelLoader = new LevelLoader(world, pelota.body, holeBody, 6, map);
         levelLoader.loadLevel();
         pelota.body = levelLoader.getPelotaBody();
         holeBody = levelLoader.getHoleBody();
