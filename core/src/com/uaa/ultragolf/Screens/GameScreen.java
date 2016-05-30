@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.uaa.ultragolf.Actors.BarraDePoder;
 import com.uaa.ultragolf.Actors.Nube;
 import com.uaa.ultragolf.Actors.Pelota;
 import com.uaa.ultragolf.Global.Constantes;
@@ -27,10 +28,11 @@ public class GameScreen extends ScreenAdapter {
     private SpriteBatch batch;
     private Pelota pelota;
     private ArrayList<Nube> nubes;
-    private OrthographicCamera camera;
+    private OrthographicCamera camera, staticCamera;
     private World world;
+    private BarraDePoder barraDePoder;
     private Box2DDebugRenderer physicsRenderer;
-    private boolean pelotaEnfocada = false;
+    private boolean pelotaEnfocada = false, tirar;
     private Body holeBody;
     private OrthogonalTiledMapRenderer mapRenderer;
     private TiledMap map;
@@ -41,11 +43,12 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void show() {
         cameraZoom = 0;
+        tirar = false;
         batch = new SpriteBatch();
         pelota = new Pelota();
         world = new World(Constantes.GRAVITY, true);
         physicsRenderer = new Box2DDebugRenderer();
-        LevelLoader levelLoader = new LevelLoader(world, pelota.body, holeBody, 6, map);
+        LevelLoader levelLoader = new LevelLoader(world, pelota.body, holeBody, 7, map);
         levelLoader.loadLevel();
         pelota.body = levelLoader.getPelotaBody();
         holeBody = levelLoader.getHoleBody();
@@ -53,9 +56,11 @@ public class GameScreen extends ScreenAdapter {
         mapSize = levelLoader.getMapDimension();
         holeLocation = levelLoader.getHoleLocation();
         camera = new OrthographicCamera(Constantes.WIDTH / PPM, Constantes.HEIGHT / PPM);
+        staticCamera = new OrthographicCamera(Constantes.WIDTH / PPM, Constantes.HEIGHT / PPM);
+
         camera.position.set(holeLocation.x,holeLocation.y,0);
         limitCamera();
-
+        barraDePoder = new BarraDePoder(pelota.body,staticCamera);
         int n = 9+(int) (Math.random() * 6);
         nubes = new ArrayList<Nube>();
         for (int i = 0; i < n; i++) {
@@ -80,8 +85,13 @@ public class GameScreen extends ScreenAdapter {
         mapRenderer.render();
         batch.begin();
         pelota.draw(batch,1);
-
         batch.end();
+        batch.setProjectionMatrix(staticCamera.combined);
+        if(tirar) {
+            batch.begin();
+            barraDePoder.draw(batch, 1);
+            batch.end();
+        }
         //physicsRenderer.render(world,camera.combined);
     }
 
@@ -169,13 +179,18 @@ public class GameScreen extends ScreenAdapter {
     }
     private void checkInputUser() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER) && pelotaEnfocada){
-            camera.position.x = pelota.body.getPosition().x;
-            camera.position.y = pelota.body.getPosition().y;
-            limitCamera();
-            pelota.body.applyForceToCenter(pelota.getXForce(100),pelota.getYForce(100),true);
-            if(pelota.isFirstTime())
-            {
-                pelota.setFirstTime(false);
+            if(!tirar) {
+                tirar = true;
+                barraDePoder.resetPower();
+            } else {
+                camera.position.x = pelota.body.getPosition().x;
+                camera.position.y = pelota.body.getPosition().y;
+                limitCamera();
+                pelota.body.applyForceToCenter(pelota.getXForce(barraDePoder.getPower()), pelota.getYForce(barraDePoder.getPower()), true);
+                if (pelota.isFirstTime()) {
+                    pelota.setFirstTime(false);
+                }
+                tirar = false;
             }
         }
 
@@ -208,6 +223,4 @@ public class GameScreen extends ScreenAdapter {
     public void hide() {
 
     }
-
 }
-

@@ -10,7 +10,7 @@ import com.uaa.ultragolf.Animations.FlechaAnimation;
 import com.uaa.ultragolf.Animations.GolfistaAnimation;
 
 public class Pelota extends Actor {
-
+    Texture t;
     private float dt;
     private GolfistaAnimation golfistaAnimation;
     private boolean firstTime = true;
@@ -27,6 +27,7 @@ public class Pelota extends Actor {
         flechaAnimation = new FlechaAnimation();
         golfistaAnimation = new GolfistaAnimation();
         textura = new Texture("sprites/pelota.png");
+        t = new Texture("sprites/power_bar.png");
     }
     public void setAngle(float angle) {
         flechaAnimation.setAngle(angle);
@@ -42,6 +43,7 @@ public class Pelota extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.draw(textura,body.getPosition().x-0.3f,body.getPosition().y-0.3f,0.6f,0.6f);
+        //batch.draw(t,body.getPosition().x-0.3f,body.getPosition().y-0.3f,0.6f,0.6f);
         if(!body.isAwake() || firstTime)
             flechaAnimation.draw(dt, (SpriteBatch) batch,body.getPosition().x,body.getPosition().y);
     }
@@ -50,10 +52,10 @@ public class Pelota extends Actor {
         return firstTime;
     }
 
-    public float getXForce(int i) {
+    public float getXForce(float i) {
         return (float) (i*Math.cos(Math.toRadians(flechaAnimation.getAngle())));
     }
-    public float getYForce(int i) {
+    public float getYForce(float i) {
         return (float) (i*Math.sin(Math.toRadians(flechaAnimation.getAngle())));
     }
 
