@@ -12,8 +12,8 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.uaa.ultragolf.Actors.Nube;
 import com.uaa.ultragolf.Actors.Pelota;
-import com.uaa.ultragolf.Animations.FlechaAnimation;
 import com.uaa.ultragolf.Global.Constantes;
+import com.uaa.ultragolf.Global.Point;
 import com.uaa.ultragolf.Levels.LevelLoader;
 
 import static com.uaa.ultragolf.Global.Constantes.PPM;
@@ -23,12 +23,14 @@ import java.util.ArrayList;
 public class GameScreen extends ScreenAdapter {
     protected Game game;
     private Dimension mapSize;
+    private Point holeLocation;
     private SpriteBatch batch;
     private Pelota pelota;
     private ArrayList<Nube> nubes;
     private OrthographicCamera camera;
     private World world;
     private Box2DDebugRenderer physicsRenderer;
+    private boolean pelotaEnfocada = false;
     private Body holeBody;
     private OrthogonalTiledMapRenderer mapRenderer;
     private TiledMap map;
@@ -43,15 +45,17 @@ public class GameScreen extends ScreenAdapter {
         pelota = new Pelota();
         world = new World(Constantes.GRAVITY, true);
         physicsRenderer = new Box2DDebugRenderer();
-        camera = new OrthographicCamera(Constantes.WIDTH / PPM, Constantes.HEIGHT / PPM);
-        camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
-        camera.update();
         LevelLoader levelLoader = new LevelLoader(world, pelota.body, holeBody, 6, map);
         levelLoader.loadLevel();
         pelota.body = levelLoader.getPelotaBody();
         holeBody = levelLoader.getHoleBody();
         mapRenderer = levelLoader.loadMapRenderer();
         mapSize = levelLoader.getMapDimension();
+        holeLocation = levelLoader.getHoleLocation();
+        camera = new OrthographicCamera(Constantes.WIDTH / PPM, Constantes.HEIGHT / PPM);
+        camera.position.set(holeLocation.x,holeLocation.y,0);
+        limitCamera();
+
         int n = 9+(int) (Math.random() * 6);
         nubes = new ArrayList<Nube>();
         for (int i = 0; i < n; i++) {
@@ -82,10 +86,13 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void update(float delta) {
-        pelota.act(delta,camera);
-        for(Nube nube : nubes)
+        if(pelotaEnfocada)
+            pelota.act(delta, camera);
+        if(!pelotaEnfocada)
+            enfocarPelota(delta);
+        for (Nube nube : nubes)
             nube.act(delta);
-        if(pelota.isMoving())
+        if (pelota.isMoving())
             updateCamera(pelota.body.getPosition().x,pelota.body.getPosition().y);
         else{
             arrastrarCamara();
@@ -138,20 +145,32 @@ public class GameScreen extends ScreenAdapter {
         }
         if((camX-(camera.viewportWidth/2)>=0 && camX+(camera.viewportWidth/2)<=mapSize.getWidth()/PPM) && (camY-(camera.viewportHeight/2)>=0 && camY+(camera.viewportHeight/2)<=mapSize.getHeight()/PPM)) {
             pelota.centered = true;
-        }else {
+        } else {
             pelota.centered = false;
         }
         camera.update();
     }
-
+    public void enfocarPelota(float delta) {
+        float x0 = camera.position.x;
+        float y0 = camera.position.y;
+        if(camera.position.x > pelota.body.getPosition().x) camera.position.x -= 3*delta;
+        if(camera.position.x < pelota.body.getPosition().x) camera.position.x += 3*delta;
+        if(camera.position.y > pelota.body.getPosition().y) camera.position.y -= 3*delta;
+        if(camera.position.y < pelota.body.getPosition().y) camera.position.y += 3*delta;
+        if(cameraZoom < Constantes.MAX_ZOOM  && (camera.viewportWidth < mapSize.getWidth()/PPM) ) {
+            cameraZoom++;
+            camera.viewportWidth += Constantes.WIDTH / PPM / (Constantes.ZOOM_SPEED*2);
+            camera.viewportHeight += Constantes.HEIGHT / PPM / (Constantes.ZOOM_SPEED*2);
+        }
+        limitCamera();
+        float x1 = camera.position.x;
+        float y1 = camera.position.y;
+        if(Math.abs(x1-x0) <= 0 && Math.abs(y1-y0) <= 0) pelotaEnfocada = true;
+    }
     private void checkInputUser() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
-            camera.viewportWidth = Constantes.WIDTH/PPM;
-            camera.viewportHeight = Constantes.HEIGHT/PPM;
-            cameraZoom = 0;
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER) && pelotaEnfocada){
             camera.position.x = pelota.body.getPosition().x;
             camera.position.y = pelota.body.getPosition().y;
-
             limitCamera();
             pelota.body.applyForceToCenter(pelota.getXForce(100),pelota.getYForce(100),true);
             if(pelota.isFirstTime())
@@ -161,13 +180,11 @@ public class GameScreen extends ScreenAdapter {
         }
 
         if(!pelota.isMoving() || pelota.isFirstTime()){
-            if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+            if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && pelotaEnfocada){
                 pelota.setAngle(pelota.getAngle()+2);
-                System.out.println("1");
             }
-            if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+            if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && pelotaEnfocada){
                 pelota.setAngle(pelota.getAngle()-2);
-                System.out.println("2");
             }
         }
     }

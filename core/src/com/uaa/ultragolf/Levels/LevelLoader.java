@@ -9,7 +9,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.*;
-import com.uaa.ultragolf.Global.Constantes;
+import com.uaa.ultragolf.Global.*;
+import com.uaa.ultragolf.Global.Point;
 
 import java.awt.*;
 
@@ -18,6 +19,7 @@ public class LevelLoader {
     private Body pelotaBody , holeBody;
     private int numLevel;
     private TiledMap map;
+    private Point holeLocation;
     private OrthogonalTiledMapRenderer mapRenderer;
     public LevelLoader(World world, Body pelotaBody, Body holeBody, int numLevel,TiledMap map) {
         this.world = world;
@@ -87,10 +89,15 @@ public class LevelLoader {
                 body.createFixture(fixtureDef);
                 //Revisar si es el objeto hoyo
                 if(object.getProperties().get("hoyo") != null){
+                    holeLocation = new Point(vertices[0],vertices[1]);
                     holeBody = body;
                 }
                 shape.dispose();
             }
         }
+    }
+
+    public Point getHoleLocation() {
+        return holeLocation;
     }
 }
