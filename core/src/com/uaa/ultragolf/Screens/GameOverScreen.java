@@ -19,7 +19,7 @@ public class GameOverScreen extends ScreenAdapter {
 
     private void checkInputUser() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            game.setScreen(new GameScreen(game));
+            game.setScreen(new GameScreen(game,2));
         }
     }
 

@@ -50,7 +50,7 @@ public class BarraDePoder {
         angle = 90;
     }
     public float getPower() {
-        return 10+Math.abs(90-angle)*2;
+        return 10+Math.abs(90-angle)*4;
 
     }
 }

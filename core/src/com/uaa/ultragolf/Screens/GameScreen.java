@@ -7,9 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.uaa.ultragolf.Actors.BarraDePoder;
 import com.uaa.ultragolf.Actors.Nube;
 import com.uaa.ultragolf.Actors.Pelota;
@@ -36,9 +34,11 @@ public class GameScreen extends ScreenAdapter {
     private Body holeBody;
     private OrthogonalTiledMapRenderer mapRenderer;
     private TiledMap map;
+    int level;
     private int cameraZoom;
-    public GameScreen(Game game) {
+    public GameScreen(Game game,int level) {
         this.game = game;
+        this.level = level;
     }
     @Override
     public void show() {
@@ -48,7 +48,7 @@ public class GameScreen extends ScreenAdapter {
         pelota = new Pelota();
         world = new World(Constantes.GRAVITY, true);
         physicsRenderer = new Box2DDebugRenderer();
-        LevelLoader levelLoader = new LevelLoader(world, pelota.body, holeBody, 7, map);
+        LevelLoader levelLoader = new LevelLoader(world, pelota.body, holeBody, level, map);
         levelLoader.loadLevel();
         pelota.body = levelLoader.getPelotaBody();
         holeBody = levelLoader.getHoleBody();
@@ -57,12 +57,35 @@ public class GameScreen extends ScreenAdapter {
         holeLocation = levelLoader.getHoleLocation();
         camera = new OrthographicCamera(Constantes.WIDTH / PPM, Constantes.HEIGHT / PPM);
         staticCamera = new OrthographicCamera(Constantes.WIDTH / PPM, Constantes.HEIGHT / PPM);
-
         camera.position.set(holeLocation.x,holeLocation.y,0);
         limitCamera();
         barraDePoder = new BarraDePoder(pelota.body,staticCamera);
         int n = 9+(int) (Math.random() * 6);
         nubes = new ArrayList<Nube>();
+        world.setContactListener(new ContactListener() {
+            @Override
+            public void beginContact(Contact contact) {
+                if((contact.getFixtureA() == pelota.body.getFixtureList().first() && contact.getFixtureB() == holeBody.getFixtureList().first()) ||
+                        (contact.getFixtureB() == pelota.body.getFixtureList().first() && contact.getFixtureA() == holeBody.getFixtureList().first())) {
+                    game.setScreen(new GameScreen(game,level+1));
+                }
+            }
+
+            @Override
+            public void endContact(Contact contact) {
+
+            }
+
+            @Override
+            public void preSolve(Contact contact, Manifold oldManifold) {
+
+            }
+
+            @Override
+            public void postSolve(Contact contact, ContactImpulse impulse) {
+
+            }
+        });
         for (int i = 0; i < n; i++) {
             nubes.add(new Nube(camera,mapSize));
         }
@@ -178,7 +201,7 @@ public class GameScreen extends ScreenAdapter {
         if(Math.abs(x1-x0) <= 0 && Math.abs(y1-y0) <= 0) pelotaEnfocada = true;
     }
     private void checkInputUser() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER) && pelotaEnfocada){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER) && pelotaEnfocada && !pelota.isMoving()){
             if(!tirar) {
                 tirar = true;
                 barraDePoder.resetPower();
