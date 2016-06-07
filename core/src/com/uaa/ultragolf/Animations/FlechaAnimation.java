@@ -13,10 +13,15 @@ public class FlechaAnimation {
     private float angle;
 
     public void setAngle(float angle) {
+        if(angle > 360)
+            angle = angle-360;
+        if(angle < 0)
+            angle = 360+angle;
         this.angle = angle;
     }
 
-    public float getAngle() {
+
+    public float getAngle(){
         return angle;
     }
 

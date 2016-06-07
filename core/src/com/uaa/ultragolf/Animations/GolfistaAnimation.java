@@ -3,6 +3,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.uaa.ultragolf.Global.Constantes;
 
 public class GolfistaAnimation {
     Texture img;
@@ -16,13 +17,13 @@ public class GolfistaAnimation {
 
         animate = false;
         sumTime = 0f;
-        img = new Texture("sprites/golfista.png");
-        TextureRegion[][] tmpFrames = TextureRegion.split(img,64,64);
-        animationFrames = new TextureRegion[8];
-        for(int i = 0 ; i < 8 ; i++) {
+        img = new Texture("sprites/golfista2.png");
+        TextureRegion[][] tmpFrames = TextureRegion.split(img,128,128);
+        animationFrames = new TextureRegion[15];
+        for(int i = 0 ; i < 15 ; i++) {
             animationFrames[i] = tmpFrames[0][i];
         }
-        animation = new Animation(1/10f,animationFrames);
+        animation = new Animation(1/20f,animationFrames);
     }
 
     public float getWidth() {
@@ -37,10 +38,14 @@ public class GolfistaAnimation {
     public void setInverted(boolean invert){
         inverted = invert;
     }
+
     public void draw(float dt,SpriteBatch batch,float x, float y){
+
         if(animate) {
             if(!animation.isAnimationFinished(sumTime)) {
                 TextureRegion tempFrame = animation.getKeyFrame(sumTime, true);
+                float w = (tempFrame.getRegionWidth()/ Constantes.PPM)/1.5f;
+                float h = (tempFrame.getRegionHeight()/ Constantes.PPM)/1.5f;
                 if(inverted){
                     if(!tempFrame.isFlipX())
                         tempFrame.flip(true,false);
@@ -48,8 +53,8 @@ public class GolfistaAnimation {
                     if(tempFrame.isFlipX())
                         tempFrame.flip(true,false);
                 }
-                if(inverted) x+=14;
-                batch.draw(tempFrame, x, y);
+                if(inverted) x+=45/Constantes.PPM;
+                batch.draw(tempFrame, x-(64/Constantes.PPM), y-(20/Constantes.PPM),w,h);
                 sumTime += dt;
             } else {
                 animate = false;

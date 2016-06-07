@@ -40,6 +40,11 @@ public class BarraDePoder {
         indicadorSprite.setRotation(angle);
         indicadorSprite.draw(batch);
     }
+    public void drawOnly(SpriteBatch batch, float delta) {
+        batch.draw(barra,x,y,w,h);
+        indicadorSprite.setRotation(angle);
+        indicadorSprite.draw(batch);
+    }
 
     private void update(float delta) {
         if(angle < 0 || angle > 90) speed=-speed;

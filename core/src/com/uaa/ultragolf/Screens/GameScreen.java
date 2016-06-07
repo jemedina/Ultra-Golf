@@ -30,10 +30,11 @@ public class GameScreen extends ScreenAdapter {
     private World world;
     private BarraDePoder barraDePoder;
     private Box2DDebugRenderer physicsRenderer;
-    private boolean pelotaEnfocada = false, tirar;
+    private boolean pelotaEnfocada = false, tirar,animarGolfista;
     private Body holeBody;
     private OrthogonalTiledMapRenderer mapRenderer;
     private TiledMap map;
+    private float potenciaCapturada;
     int level;
     private int cameraZoom;
     public GameScreen(Game game,int level) {
@@ -44,6 +45,7 @@ public class GameScreen extends ScreenAdapter {
     public void show() {
         cameraZoom = 0;
         tirar = false;
+        animarGolfista = false;
         batch = new SpriteBatch();
         pelota = new Pelota();
         world = new World(Constantes.GRAVITY, true);
@@ -110,10 +112,15 @@ public class GameScreen extends ScreenAdapter {
         pelota.draw(batch,1);
         batch.end();
         batch.setProjectionMatrix(staticCamera.combined);
-        if(tirar) {
+        if(tirar && animarGolfista) {
             batch.begin();
             barraDePoder.draw(batch, 1);
             batch.end();
+        } else if(tirar){
+            batch.begin();
+            barraDePoder.drawOnly(batch, 1);
+            batch.end();
+
         }
         //physicsRenderer.render(world,camera.combined);
     }
@@ -130,7 +137,23 @@ public class GameScreen extends ScreenAdapter {
         else{
             arrastrarCamara();
         }
+
+        checkTiro();
     }
+
+    private void checkTiro() {
+         if(tirar && !pelota.isGolfistaAnimating() && !animarGolfista){
+            camera.position.x = pelota.body.getPosition().x;
+            camera.position.y = pelota.body.getPosition().y;
+            limitCamera();
+            pelota.body.applyForceToCenter(pelota.getXForce(potenciaCapturada), pelota.getYForce(potenciaCapturada), true);
+            if (pelota.isFirstTime()) {
+                pelota.setFirstTime(false);
+            }
+            tirar = false;
+        }
+    }
+
     private void arrastrarCamara() {
         if(Gdx.input.isTouched()) {
             camera.translate(-Gdx.input.getDeltaX()/PPM,Gdx.input.getDeltaY()/PPM);
@@ -204,16 +227,12 @@ public class GameScreen extends ScreenAdapter {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER) && pelotaEnfocada && !pelota.isMoving()){
             if(!tirar) {
                 tirar = true;
+                animarGolfista = true;
                 barraDePoder.resetPower();
-            } else {
-                camera.position.x = pelota.body.getPosition().x;
-                camera.position.y = pelota.body.getPosition().y;
-                limitCamera();
-                pelota.body.applyForceToCenter(pelota.getXForce(barraDePoder.getPower()), pelota.getYForce(barraDePoder.getPower()), true);
-                if (pelota.isFirstTime()) {
-                    pelota.setFirstTime(false);
-                }
-                tirar = false;
+            } else if(tirar && !pelota.isGolfistaAnimating()){
+                pelota.animateGolfista();
+                animarGolfista = false;
+                potenciaCapturada = barraDePoder.getPower();
             }
         }
 

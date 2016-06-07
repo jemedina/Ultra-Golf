@@ -39,13 +39,25 @@ public class Pelota extends Actor {
         this.setPosition(body.getPosition().x-0.3f,body.getPosition().y-0.3f);
         dt = delta;
     }
+    public void animateGolfista() {
+        golfistaAnimation.animate();
+    }
 
+    public boolean isGolfistaAnimating() {
+        return golfistaAnimation.isAnimating();
+    }
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.draw(textura,body.getPosition().x-0.3f,body.getPosition().y-0.3f,0.6f,0.6f);
         //batch.draw(t,body.getPosition().x-0.3f,body.getPosition().y-0.3f,0.6f,0.6f);
-        if(!body.isAwake() || firstTime)
+        if(flechaAnimation.getAngle() > 90 && flechaAnimation.getAngle() < 270)
+            golfistaAnimation.setInverted(true);
+        else
+            golfistaAnimation.setInverted(false);
+        if(!body.isAwake() || firstTime && !golfistaAnimation.isAnimating())
             flechaAnimation.draw(dt, (SpriteBatch) batch,body.getPosition().x,body.getPosition().y);
+        golfistaAnimation.draw(dt, (SpriteBatch) batch,body.getPosition().x,body.getPosition().y);
+
     }
 
     public boolean isFirstTime() {
