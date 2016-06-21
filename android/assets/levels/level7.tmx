@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="64" height="30" tilewidth="32" tileheight="40" nextobjectid="20">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="64" height="30" tilewidth="32" tileheight="40" nextobjectid="21">
  <tileset firstgid="1" name="Nivel 3" tilewidth="32" tileheight="40" tilecount="1920" columns="64">
   <image source="Fondo7.png" width="2048" height="1200"/>
  </tileset>
@@ -92,9 +92,6 @@
    </properties>
    <polyline points="0,0 1.33333,6 99,6.33333 101.667,-0.333333"/>
   </object>
-  <object id="17" x="3.0303" y="309.091">
-   <polyline points="0,0 0,-303.03 1454.97,-307.091 2042.97,-307.091 2039.39,-112.121"/>
-  </object>
   <object id="18" x="45.4545" y="251.515" width="57.5758" height="51.5152">
    <properties>
     <property name="pelota" value="0.0"/>
@@ -106,6 +103,12 @@
     <property name="hoyo" value="0.0"/>
    </properties>
    <polyline points="0,0 6,3.33333 18.6667,4.66667 26.6667,4.66667 34,2.66667 36,1.33333 37.3333,-1.33333"/>
+  </object>
+  <object id="20" x="0" y="304">
+   <properties>
+    <property name="rozamiento" type="float" value="0"/>
+   </properties>
+   <polyline points="0,0 8,-1360 2120,-1304 2056,-328 2056,-120 2056,-72"/>
   </object>
  </objectgroup>
 </map>

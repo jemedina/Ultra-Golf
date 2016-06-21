@@ -1,9 +1,6 @@
 package com.uaa.ultragolf.Screens;
 
-import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -18,17 +15,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.uaa.ultragolf.Actors.FondoMobil;
+import com.uaa.ultragolf.Global.Constantes;
 
-public class GameOverScreen extends ScreenAdapter {
+public class Menu extends ScreenAdapter {
     protected Game game;
     private FondoMobil fondoMobil;
     public static EstadoDeJuego es;
     Skin skin;
     Stage stage;
-    SpriteBatch batch, n1,n2;
     Sound click;
-    Texture img, imagen1, imagen2,imagen3, imagen4,imagen5, imagen6,  imagen7, imagen8, nivel , ov;
-    public GameOverScreen(Game game, boolean gameOver){
+    SpriteBatch batch, n1,n2;
+    Texture img, imagen1, imagen2,imagen3, imagen4,imagen5, imagen6, imagen7, imagen8, nivel;
+    public Menu(Game game){
         this.game = game;
     }
     public enum EstadoDeJuego {
@@ -38,12 +36,10 @@ public class GameOverScreen extends ScreenAdapter {
 
     @Override
     public void show() {
-
-        click = Gdx.audio.newSound(Gdx.files.getFileHandle("sounds/click.wav", Files.FileType.Local));
-        es = EstadoDeJuego.SALIR;
+       click = Gdx.audio.newSound(Gdx.files.getFileHandle("sounds/click.wav", Files.FileType.Local));
+        es = EstadoDeJuego.MENU;
         batch = new SpriteBatch();
         fondoMobil = new FondoMobil();
-
         n1 = new SpriteBatch();
         img = new Texture(Gdx.files.internal("sprites/UltraGolfLogo.png"));
         imagen1 = new Texture(Gdx.files.internal("ui/Niveles1.png"));
@@ -55,7 +51,6 @@ public class GameOverScreen extends ScreenAdapter {
         imagen7 = new Texture(Gdx.files.internal("ui/Niveles7.png"));
         imagen8 = new Texture(Gdx.files.internal("ui/Niveles8.png"));
         nivel = new Texture(Gdx.files.internal("sprites/textoNiveles.png"));
-        ov = new Texture(Gdx.files.internal("sprites/gameOver.png"));
 
     }
 
@@ -66,54 +61,10 @@ public class GameOverScreen extends ScreenAdapter {
         batch.begin();
         //batch.draw(img, -100, 0);
         fondoMobil.draw(batch,delta);
+        batch.draw(img,Gdx.graphics.getWidth()/2 - img.getWidth()/2,Gdx.graphics.getHeight()/2 - img.getHeight()/2);
         batch.end();
 
         switch (es) {
-            case SALIR:
-                stage = new Stage();
-                Table tablax = new Table();
-                tablax.setPosition(1024 / 3, 450);
-                tablax.setFillParent(true);
-                tablax.setHeight(600);
-                stage.addActor(tablax);
-                batch.begin();
-                batch.draw(ov,Gdx.graphics.getWidth()/2 - ov.getWidth()/2,Gdx.graphics.getHeight()/2-100);
-                batch.end();
-                Label labelx = new Label("SSG2", getSkin());
-
-                labelx.setPosition((int) tablax.getWidth()/2,0);
-                //tabla.addActor(label);
-
-                TextButton juegax = new TextButton("Juega", getSkin());
-                juegax.setPosition(245, labelx.getOriginY() - 120);
-                juegax.setWidth(200);
-                juegax.setHeight(40);
-                juegax.setColor(Color.GREEN);
-                juegax.addListener(new InputListener() {
-                    public boolean touchDown(InputEvent e, float x, float y, int punto, int boton) {
-                        es = EstadoDeJuego.JUGAR;
-                        return false;
-                    }
-                });
-                tablax.addActor(juegax);
-
-                TextButton Salir = new TextButton("Salir", getSkin());
-                Salir.setPosition(245, labelx.getOriginY() - 220);
-                Salir.setWidth(200);
-                Salir.setHeight(40);
-                Salir.setColor(Color.PURPLE);
-                Salir.addListener(new InputListener() {
-                    public boolean touchDown(InputEvent e, float x, float y, int punto, int boton) {
-                        Gdx.app.exit();
-                        return false;
-                    }
-                });
-                tablax.addActor(Salir);
-                stage.act(Gdx.graphics.getDeltaTime());
-                stage.draw();
-                Gdx.input.setInputProcessor(stage);
-
-                break;
             case MENU:
                 stage = new Stage();
                 Table tabla = new Table();
@@ -121,11 +72,9 @@ public class GameOverScreen extends ScreenAdapter {
                 tabla.setFillParent(true);
                 tabla.setHeight(600);
                 stage.addActor(tabla);
-                batch.begin();
-                batch.draw(img,Gdx.graphics.getWidth()/2 - img.getWidth()/2,Gdx.graphics.getHeight()/2 - img.getHeight()/2);
-                batch.end();
-                Label label = new Label("SSG2", getSkin());
 
+                Label label = new Label("SSG2", getSkin());
+                
                 label.setPosition((int) tabla.getWidth()/2,0);
                 //tabla.addActor(label);
 
@@ -136,30 +85,32 @@ public class GameOverScreen extends ScreenAdapter {
                 juega.setColor(Color.GREEN);
                 juega.addListener(new InputListener() {
                     public boolean touchDown(InputEvent e, float x, float y, int punto, int boton) {
+                        click.play();
                         es = EstadoDeJuego.JUGAR;
                         return false;
                     }
                 });
                 tabla.addActor(juega);
 
-                TextButton Salirx = new TextButton("Salir", getSkin());
-                Salirx.setPosition(245, label.getOriginY() - 220);
-                Salirx.setWidth(200);
-                Salirx.setHeight(40);
-                Salirx.setColor(Color.PURPLE);
-                Salirx.addListener(new InputListener() {
+                TextButton Salir = new TextButton("Salir", getSkin());
+                Salir.setPosition(245, label.getOriginY() - 220);
+                Salir.setWidth(200);
+                Salir.setHeight(40);
+                Salir.setColor(Color.PURPLE);
+                Salir.addListener(new InputListener() {
                     public boolean touchDown(InputEvent e, float x, float y, int punto, int boton) {
+                        click.play();
                         Gdx.app.exit();
                         return false;
                     }
                 });
-                tabla.addActor(Salirx);
+                tabla.addActor(Salir);
                 stage.act(Gdx.graphics.getDeltaTime());
                 stage.draw();
                 Gdx.input.setInputProcessor(stage);
 
                 break;
-
+                
             case JUGAR:
                 stage = new Stage();
 
@@ -180,7 +131,6 @@ public class GameOverScreen extends ScreenAdapter {
                     b[i].setHeight(50);
                     tablan.addActor(b[i]);
                 }
-
 
                 b[0].addListener(new InputListener() {
                     public boolean touchDown(InputEvent e, float x, float y, int punto, int boton) {

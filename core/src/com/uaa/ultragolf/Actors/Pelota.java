@@ -10,12 +10,12 @@ import com.uaa.ultragolf.Animations.FlechaAnimation;
 import com.uaa.ultragolf.Animations.GolfistaAnimation;
 
 public class Pelota extends Actor {
-    Texture t;
     private float dt;
+    //Animacion del golfista
     private GolfistaAnimation golfistaAnimation;
-    private boolean firstTime = true;
-    private Texture textura;
-    private FlechaAnimation flechaAnimation;
+    private boolean firstTime = true;//Bandera para saber si es el primer tiro
+    private Texture textura;//Textura de la pelota
+    private FlechaAnimation flechaAnimation;//Animacion de la flecha
     public boolean centered;
     public Body body;
 
@@ -27,14 +27,14 @@ public class Pelota extends Actor {
         flechaAnimation = new FlechaAnimation();
         golfistaAnimation = new GolfistaAnimation();
         textura = new Texture("sprites/pelota.png");
-        t = new Texture("sprites/power_bar.png");
     }
     public void setAngle(float angle) {
         flechaAnimation.setAngle(angle);
     }
     public boolean isMoving() {
         return body.isAwake();
-    }
+    }//Saber si la pelota esta en movimiento
+    //Ejecuta logica de la pelota
     public void act(float delta,OrthographicCamera cam) {
         this.setPosition(body.getPosition().x-0.3f,body.getPosition().y-0.3f);
         dt = delta;
@@ -46,6 +46,7 @@ public class Pelota extends Actor {
     public boolean isGolfistaAnimating() {
         return golfistaAnimation.isAnimating();
     }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.draw(textura,body.getPosition().x-0.3f,body.getPosition().y-0.3f,0.6f,0.6f);
@@ -56,7 +57,7 @@ public class Pelota extends Actor {
             golfistaAnimation.setInverted(false);
         if(!body.isAwake() || firstTime && !golfistaAnimation.isAnimating())
             flechaAnimation.draw(dt, (SpriteBatch) batch,body.getPosition().x,body.getPosition().y);
-        golfistaAnimation.draw(dt, (SpriteBatch) batch,body.getPosition().x,body.getPosition().y);
+            golfistaAnimation.draw(dt, (SpriteBatch) batch,body.getPosition().x,body.getPosition().y);
 
     }
 

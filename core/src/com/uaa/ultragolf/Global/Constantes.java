@@ -11,5 +11,6 @@ public final class Constantes {
     public static final float ZOOM_SPEED = 50;
     public static final int MIN_ZOOM = 0;
     public static final int MAX_ZOOM = 30;
+    public static final int[] levels = {2,5,6,3,4,7,8,9};
 
 }

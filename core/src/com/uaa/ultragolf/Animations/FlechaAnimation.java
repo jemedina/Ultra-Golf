@@ -2,7 +2,6 @@ package com.uaa.ultragolf.Animations;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.math.MathUtils;
 import com.uaa.ultragolf.Global.Constantes;
 
 public class FlechaAnimation {
@@ -11,7 +10,6 @@ public class FlechaAnimation {
     Animation animation;
     float sumTime;
     private float angle;
-
     public void setAngle(float angle) {
         if(angle > 360)
             angle = angle-360;

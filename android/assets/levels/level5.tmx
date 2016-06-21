@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="64" height="60" tilewidth="16" tileheight="10" nextobjectid="34">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="64" height="60" tilewidth="16" tileheight="10" nextobjectid="36">
  <tileset firstgid="1" name="Nivel1" tilewidth="16" tileheight="10" tilecount="3840" columns="64">
   <image source="Fondo5.png" width="1024" height="600"/>
  </tileset>
@@ -77,12 +77,6 @@
    </properties>
    <polyline points="0,0 92,1 95,96.5 105.5,115 115,125.5 129,134.5 138.5,138 155.5,139 170.5,131 187,118 200.5,103.5 297,99.5 313,41.5 329.5,-8 348.5,-50.5 363.5,-73 378,-84.5 386.5,-87.5 392,-88.5 397,-88.5 402.5,-86 411.5,-81 425,-67.5 433,-56.5 442.5,-42 448.5,-31.5 458.5,-8 469,19 475.5,36 485,64 493.5,95 493.5,97.5 502,106 517,118 532.5,126 541,128.5 559.5,128 581,118 596.5,102 659.5,101 696,100.5 759,99.5 763.5,102.5 770.5,102.5 775.5,102.5 787,102.5 790,101.5 793.5,99.5 804,97 821,90.5 879,62 899.5,46.5 904,40 901,22 894,-7.5 887,-58.5 889.5,-111 892,-129 897.5,-143.5 904.5,-160.5 919,-182 930,-189.5 947,-199 956,-200.5 986,-200.5 1018,-200 1018.67,193.333 1.33333,195.333 1.33333,0.666667"/>
   </object>
-  <object id="30" x="1024" y="196">
-   <properties>
-    <property name="rozamiento" value="0.0"/>
-   </properties>
-   <polyline points="0,0 0,-194.667 -1022.67,-196 -1024,4 -1022.67,204"/>
-  </object>
   <object id="32" x="759" y="501">
    <properties>
     <property name="hoyo" value="0.0"/>
@@ -94,6 +88,18 @@
     <property name="pelota" value="0.0"/>
    </properties>
    <ellipse/>
+  </object>
+  <object id="34" x="-3.0303" y="406.061">
+   <properties>
+    <property name="rozamiento" type="float" value="0"/>
+   </properties>
+   <polyline points="0,0 3.0303,-921.212 1169.7,-918.182"/>
+  </object>
+  <object id="35" x="1015.15" y="206.061">
+   <properties>
+    <property name="rozamiento" type="float" value="0"/>
+   </properties>
+   <polyline points="0,0 3.0303,-763.636"/>
   </object>
  </objectgroup>
 </map>

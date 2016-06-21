@@ -16,10 +16,12 @@ import java.awt.*;
 
 public class LevelLoader {
     private World world;
-    private Body pelotaBody , holeBody;
+    private Body pelotaBody , holeBody, watterBody;
     private int numLevel;
     private TiledMap map;
     private Point holeLocation;
+    private boolean restore;
+    private Point restoreLocation;
     private OrthogonalTiledMapRenderer mapRenderer;
     public LevelLoader(World world, Body pelotaBody, Body holeBody, int numLevel,TiledMap map) {
         this.world = world;
@@ -27,9 +29,14 @@ public class LevelLoader {
         this.holeBody = holeBody;
         this.numLevel = numLevel;
         this.map = map;
+        restore = false;
+    }
+    public void setPelotaRestore(Point loc) {
+        restore = true;
+        restoreLocation = loc;
     }
     public OrthogonalTiledMapRenderer loadMapRenderer() {
-        return new OrthogonalTiledMapRenderer(map,1/ Constantes.PPM);
+        return new OrthogonalTiledMapRenderer(map,1/Constantes.PPM);
     }
     public Dimension getMapDimension() {
         Dimension d = new Dimension();
@@ -44,6 +51,7 @@ public class LevelLoader {
     public Body getHoleBody() {
         return holeBody;
     }
+    public Body getWatterBody() { return watterBody; }
     public void loadLevel() {
         //Cargar el mapa
         map = new TmxMapLoader().load("levels/level" + numLevel + ".tmx");
@@ -58,8 +66,10 @@ public class LevelLoader {
                 float y = ellipseMapObject.getEllipse().y/ Constantes.PPM;
                 BodyDef bodyDef = new BodyDef();
                 bodyDef.type = BodyDef.BodyType.DynamicBody;
-                bodyDef.fixedRotation = false;
-                bodyDef.position.set(x,y);
+                if(restore)
+                    bodyDef.position.set(restoreLocation.x,restoreLocation.y);
+                else
+                    bodyDef.position.set(x,y);
                 bodyDef.fixedRotation = true;
                 pelotaBody = world.createBody(bodyDef);
                 FixtureDef fixtureDef = new FixtureDef();
@@ -73,6 +83,7 @@ public class LevelLoader {
             } else { /*Objetos del universo (normales)*/
                 ChainShape shape = new ChainShape();
                 float[] vertices = ((PolylineMapObject) object).getPolyline().getTransformedVertices();
+                //float[] vertices = {10,20,30,30};
                 for(int i = 0 ; i < vertices.length ; i++)
                     vertices[i] = vertices[i]/ Constantes.PPM;
                 shape.createChain(vertices);
@@ -83,14 +94,24 @@ public class LevelLoader {
                 FixtureDef fixtureDef = new FixtureDef();
                 fixtureDef.shape = shape;
                 fixtureDef.density = 1;
+                body.createFixture(fixtureDef);
                 if(object.getProperties().get("rozamiento")!=null){
                     fixtureDef.friction = Float.valueOf((String) object.getProperties().get("rozamiento"));
+                    if(Float.valueOf((String) object.getProperties().get("rozamiento")) > 0.6f){
+                        body.getFixtureList().first().setUserData("tierra");
+                    } else{
+                        body.getFixtureList().first().setUserData("common");
+                    }
                 }
-                body.createFixture(fixtureDef);
                 //Revisar si es el objeto hoyo
                 if(object.getProperties().get("hoyo") != null){
                     holeLocation = new Point(vertices[0],vertices[1]);
                     holeBody = body;
+                    holeBody.getFixtureList().first().setUserData("hole");
+                }
+                else if(object.getProperties().get("agua") != null){
+                    watterBody = body;
+                    watterBody.getFixtureList().first().setUserData("watter");
                 }
                 shape.dispose();
             }

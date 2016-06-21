@@ -12,7 +12,8 @@ public class DesktopLauncher {
 		config.resizable = false;
 		config.vSyncEnabled=true;
 		config.useHDPI=true;
-//		config.fullscreen = true;
+		config.fullscreen = true;
 		new LwjglApplication(new UltraGolf(), config);
 	}
+
 }

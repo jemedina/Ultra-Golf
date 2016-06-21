@@ -23,6 +23,7 @@ public class Nube extends Actor {
         yCam0 = camera.position.y;
         this.mapSize = mapSize;
         textura = new Texture("sprites/Nube.png");
+        //Se divide en 3 verticalmente y se toma el primer tercio para poner las nubes
         x = (float) (Math.random()*((mapSize.getWidth()/PPM)+(textura.getWidth()*3f/PPM)));
         y = (float) ((Math.random()* ((mapSize.getHeight()/5)/PPM)) + (4*mapSize.getHeight()/5)/PPM);
     }

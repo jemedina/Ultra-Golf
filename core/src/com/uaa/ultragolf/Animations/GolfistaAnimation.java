@@ -14,7 +14,6 @@ public class GolfistaAnimation {
     boolean inverted;
     public GolfistaAnimation() {
         /*LOAD GLOFISTA ANIMATION*/
-
         animate = false;
         sumTime = 0f;
         img = new Texture("sprites/golfista2.png");
@@ -40,12 +39,11 @@ public class GolfistaAnimation {
     }
 
     public void draw(float dt,SpriteBatch batch,float x, float y){
-
         if(animate) {
             if(!animation.isAnimationFinished(sumTime)) {
                 TextureRegion tempFrame = animation.getKeyFrame(sumTime, true);
                 float w = (tempFrame.getRegionWidth()/ Constantes.PPM)/1.5f;
-                float h = (tempFrame.getRegionHeight()/ Constantes.PPM)/1.5f;
+                float h = (tempFrame.getRegionHeight()/Constantes.PPM)/1.5f;
                 if(inverted){
                     if(!tempFrame.isFlipX())
                         tempFrame.flip(true,false);
@@ -53,8 +51,11 @@ public class GolfistaAnimation {
                     if(tempFrame.isFlipX())
                         tempFrame.flip(true,false);
                 }
+                //Si el mono esta invertido, moverlo 45 pixeles adelante
                 if(inverted) x+=45/Constantes.PPM;
+                //Pintar el mono en la posicion X y Y dadas
                 batch.draw(tempFrame, x-(64/Constantes.PPM), y-(20/Constantes.PPM),w,h);
+                //Incremento en el contador del tiempo para la animacion
                 sumTime += dt;
             } else {
                 animate = false;

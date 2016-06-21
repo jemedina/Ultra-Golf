@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="64" height="60" tilewidth="48" tileheight="30" nextobjectid="28">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="64" height="60" tilewidth="48" tileheight="30" nextobjectid="37">
  <tileset firstgid="1" name="Nivel2" tilewidth="48" tileheight="30" tilecount="3840" columns="64">
   <image source="Fondo6.png" width="3072" height="1800"/>
   <tile id="0">
@@ -19280,18 +19280,6 @@
    </properties>
    <polyline points="0,0 24.3333,-73.3333 43.6667,-129.333 54,-158.333 84.6667,-233.667 114,-300 136.667,-346.667 162.667,-392.667 183.333,-424.667 204.333,-453.333 227.333,-476.667 246.667,-492.333 265,-501 275.333,-504 283.667,-503.667 292.667,-502.667 298.667,-500.667 304.333,-498 311,-492.667 316.667,-484 337.667,-448 359.333,-414.333 374,-394 389.333,-375.333 405,-358 424.333,-340 440.667,-331 452,-326.667 457.333,-325 465.333,-324.667 474.667,-326 481.667,-329.333 491,-336.667 498,-346 506,-357.667 510.667,-369.333 514,-379.667 519.333,-402.667 520.667,-414.667 532.333,-443.667 540.667,-465.333 556.667,-501.333 569.333,-523.667 582,-541.667 592,-552.667 601.667,-559.333 606,-560 609.667,-560 615.667,-560 618,-559 623.333,-554.667 628.333,-548.333 634,-540.333 641.333,-521 652.333,-498 664,-476.333 675,-456 690.333,-433 703.667,-415.333 707.667,-411"/>
   </object>
-  <object id="15" x="1703.33" y="791.667">
-   <properties>
-    <property name="rozamiento " value="1.0"/>
-   </properties>
-   <polyline points="0,0 177.667,3.66667 194.667,4 310,6.66667 343.667,7.33333 394.667,8.66667 400.667,12"/>
-  </object>
-  <object id="16" x="2104.67" y="804.333">
-   <properties>
-    <property name="rozamiento" value="0.60"/>
-   </properties>
-   <polyline points="0,0 39.3333,-0.333333 211.667,0 285.333,-0.333333 295.333,11.3333 334,53.3333 370.667,82.6667 396,97 422.333,105.333 434,106.333 440.333,106.333 445.667,105.333 453,104.667 461.667,102.333 472.333,97.6667 477,95 485,89 504.333,71 521.333,44 530.667,24 532.333,18.6667 537.333,3.66667 545.667,-32.6667 552.667,-61.6667 572,-140.333 595.667,-216.667 641.667,-217.333 747.333,-220 752,-220 747,-217.667 746.333,-216.333 748.667,-214.667 752.667,-213 755.667,-213.333 762,-212.667 767,-212.667 773,-212.667 777.333,-214 780.667,-214.667 783.333,-216.333 781.333,-218 776.333,-220 772.667,-220.667 790.333,-221 835.667,-220 900.667,-220 963,-220.333"/>
-  </object>
   <object id="17" x="3067" y="583.667">
    <properties>
     <property name="rozamiento" value="0.6"/>
@@ -19304,23 +19292,47 @@
    </properties>
    <ellipse/>
   </object>
-  <object id="21" x="2856.5" y="584.25">
-   <properties>
-    <property name="hoyo" value="0.0"/>
-   </properties>
-   <polyline points="0,0 -4.5,2.5 -5.5,3.5 -4.25,4.5 -0.5,6.25 1.5,7.25 4,7 9.25,7.5 19.75,7.75 22.25,7.75 26.5,5.75 29,5 32,2.75 22,-0.75 21,-0.75"/>
-  </object>
   <object id="23" x="704" y="1204">
    <properties>
-    <property name="rozamiento " value="1.0"/>
+    <property name="rozamiento" type="float" value="0.80000000000000004"/>
    </properties>
    <polyline points="0,0 4,9 284,12 292,-2"/>
   </object>
-  <object id="27" x="3076" y="592">
+  <object id="28" x="2102" y="804">
+   <properties>
+    <property name="rozamiento" type="float" value="5"/>
+   </properties>
+   <polyline points="0,0 -398,-8"/>
+  </object>
+  <object id="30" x="2103" y="804">
+   <properties>
+    <property name="rozamiento" type="float" value="0.59999999999999998"/>
+   </properties>
+   <polyline points="0,0 284,0 296,13 307,25 347,65 362,75 393,95 412,103 427,106 441,107 455,105 475,96 492,83 510,65 527,33 541,-3 564,-98 596,-214 599,-216 742,-217"/>
+  </object>
+  <object id="32" x="2894" y="595">
+   <properties>
+    <property name="hoyo" type="float" value="0"/>
+   </properties>
+   <polyline points="0,0 -47,0"/>
+  </object>
+  <object id="33" x="2898" y="584">
+   <properties>
+    <property name="rozamiento" type="float" value="0.59999999999999998"/>
+   </properties>
+   <polyline points="0,0 167,0"/>
+  </object>
+  <object id="35" x="0" y="1056">
    <properties>
     <property name="rozamiento" type="float" value="0"/>
    </properties>
-   <polyline points="0,0 0,-596 -3072,-596 -3072,460"/>
+   <polyline points="0,0 8,-2272 3920,-2256"/>
+  </object>
+  <object id="36" x="3064" y="592">
+   <properties>
+    <property name="rozamiento" type="float" value="0"/>
+   </properties>
+   <polyline points="0,0 16,-1888"/>
   </object>
  </objectgroup>
 </map>
